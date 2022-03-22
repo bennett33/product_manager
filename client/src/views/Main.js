@@ -1,12 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import ProductForm from '../components/ProductForm';
-export default () => {
+import ProductList from '../components/ProductList';
 
 
 
+const Main =(props) => {
+
+    const [products, setProducts] = useState([]);
+    const [refresh, setRefresh] = useState(true);
+    
+    function refreshAfterFormSubmit() {
+        setRefresh(!refresh);
+        console.log("refresh");
+    }
+    useEffect(()=>{
+        axios.get('http://localhost:8000/api/products')
+            .then(res=>setProducts(res.data))
+            .catch(err=>console.log(err))
+    }, [refresh]);
+
+    
     return (
-        <ProductForm/>
+        <>
+            <ProductForm onNewFormSubmit={refreshAfterFormSubmit}/>
+            <ProductList products={products}/>
+        </>
     )
 }
 
+export default Main;
