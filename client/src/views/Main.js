@@ -24,7 +24,7 @@ const Main =(props) => {
     return (
         <>
             <ProductForm onNewFormSubmit={refreshAfterFormSubmit}/>
-            <ProductList products={products}/>
+            <ProductList onNewFormSubmit={refreshAfterFormSubmit} products={products}/>
         </>
     )
 }
